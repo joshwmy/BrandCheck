@@ -1,20 +1,24 @@
 {
   "name": "brandcheck",
-  "version": "1.0.1",
-  "description": "MCP server to check brand name availability across domains, social media, app stores, and trademark registries",
+  "version": "1.1.0",
+  "description": "CLI and MCP server for brand checks across domains, social media, Mauritius companies, and trademark registries",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "brandcheck": "dist/index.js"
+    "brandcheck": "dist/index.js",
+    "check-brand": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
+    "check": "node dist/cli.js",
+    "test": "npm run build && node --test \"test/*.test.js\"",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.1"
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

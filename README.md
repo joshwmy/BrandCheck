@@ -3,7 +3,7 @@
 </p>
 <p align="center">
   <strong>Check brand name availability everywhere. One command.</strong><br>
-  <sub>Domains · Social Media · App Stores · Trademarks · Dev Platforms</sub>
+  <sub>Domains · Social Media · App Stores · Mauritius Companies · Trademarks · Dev Platforms</sub>
 </p>
 <p align="center">
   <img src="https://img.shields.io/npm/v/brandcheck?color=8b5cf6&label=npm"/>
@@ -23,23 +23,42 @@
 
 | Category | Platforms |
 |----------|-----------|
-| 🌐 **Domains** | `.com` `.fr` `.io` `.co` `.app` `.ai` `.dev` `.org` `.net` `.eu` |
+| 🌐 **Domains** | `.mu` (RDAP) · `.com` `.fr` `.io` `.co` `.app` `.ai` `.dev` `.org` `.net` `.eu` |
 | 📱 **Social** | X · Instagram · TikTok · LinkedIn · Facebook · YouTube · Threads · Pinterest · Reddit · Snapchat · Bluesky |
 | 📲 **App Stores** | Apple App Store · Google Play |
-| ⚖️ **Trademarks** | INPI (French trademark registry) |
+| 🏢 **Companies** | Mauritius CBRD (official manual-verification link) |
+| ⚖️ **Trademarks** | Mauritius IPOM/WIPO · INPI France (manual-verification links) |
 | 💻 **Tech** | npm · GitHub |
 
-**27 platforms checked in parallel.** Results in ~5 seconds.
+**29 sources checked in parallel.** Network-dependent results usually return within a few seconds.
 
 ---
 
 ## Quick Start
 
-### Option 1: Cursor (one-click)
+### Command line
+
+Install this fork and run the complete check:
+
+```bash
+npm install
+npm link
+check-brand "DodoWeb"
+```
+
+For the Mauritius-specific checks only:
+
+```bash
+check-brand "DodoWeb" --mauritius-only
+```
+
+Use `--json` for machine-readable output or `--markdown` for a report.
+
+### MCP option 1: Cursor (one-click)
 
 Click the **"Install MCP Server"** button above. Done.
 
-### Option 2: Manual (any MCP client)
+### MCP option 2: Manual (any MCP client)
 
 Add to your MCP config (`~/.cursor/mcp.json`, Claude Desktop, etc.):
 
@@ -54,7 +73,7 @@ Add to your MCP config (`~/.cursor/mcp.json`, Claude Desktop, etc.):
 }
 ```
 
-### Option 3: npx (zero install)
+### MCP option 3: npx (zero install)
 
 ```bash
 npx brandcheck@latest
@@ -120,21 +139,24 @@ Résumé: ✅ 18 dispo · ❌ 7 pris · ❓ 2 incertain
 ## How it works
 
 All checks run **in parallel**:
-- **Domains**: DNS resolution (no WHOIS API needed)
+- **.mu domain**: registry RDAP; a 404 means no registration record was found but still requires registrar confirmation
+- **Other domains**: DNS resolution, reported as unknown—not available—when no record is found
 - **Social media**: HTTP HEAD/GET requests checking for 404 vs 200
 - **App Store**: iTunes Search API
-- **Google Play**: HTML scraping
-- **INPI**: Public data API
+- **Mauritius companies**: official CBRD search link; the site requires an interactive Turnstile check
+- **Mauritius trademarks**: official WIPO/IPOM entry point covering national and Madrid collections
+- **Google Play and INPI**: manual-review links rather than unreliable scraping
 - **npm/GitHub**: Registry and profile checks
 
-**No API keys required.** Everything uses public endpoints.
+**No API keys required.** Automated checks use public endpoints; restricted registries are never bypassed.
 
 ---
 
 ## Limitations
 
 - Social media checks rely on HTTP status codes. Some platforms may rate-limit or return ambiguous results (shown as ❓).
-- INPI check is a basic name search, not a full trademark similarity analysis. Always consult a lawyer before filing.
+- CBRD and WIPO require manual verification. WIPO's terms prohibit automatic querying of the Global Brand Database.
+- Trademark and company-name results are screening aids, not legal clearance. Always consult a qualified professional before filing.
 - App Store results are keyword-based. A "no exact match" doesn't guarantee the name is available for submission.
 
 ---
